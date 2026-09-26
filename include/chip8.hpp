@@ -6,6 +6,17 @@
 #include <string>
 
 class chip8 {
+public:
+  static constexpr size_t WIDTH = 0x40;
+  static constexpr size_t HEIGHT = 0x20;
+  chip8();
+  void cycle();
+  void loadROM(const std::string &caminho);
+  const std::array<uint8_t, chip8::WIDTH * chip8::HEIGHT> &giveDisplay() const;
+  uint8_t showHEIGHT();
+  uint8_t showWIDTH();
+
+private:
   static constexpr size_t REGISTER_SIZE = 0x10;
   static constexpr size_t FONTSET_SIZE = 0x50;
   static constexpr size_t STACK_SIZE = 0x10;
@@ -13,8 +24,6 @@ class chip8 {
   static constexpr uint16_t PROGRAM_START = 0x200;
   static constexpr uint16_t BEGIN_FONTSET = 0x050;
   static constexpr size_t KEYBOARD_SIZE = 0x10;
-  static constexpr size_t WIDTH = 0x40;
-  static constexpr size_t HEIGHT = 0x20;
   std::array<bool, KEYBOARD_SIZE> keyboard;
   std::array<uint8_t, MEMORY_SIZE> memory;
   std::array<uint8_t, REGISTER_SIZE> V;
@@ -24,7 +33,14 @@ class chip8 {
   uint8_t sp = 0x0;
   uint8_t delayTimer = 0x0;
   uint8_t soundTimer = 0x0;
-  std::array<uint8_t, WIDTH * HEIGHT> display;
+  std::array<uint8_t, chip8::WIDTH * chip8::HEIGHT> display;
+
+  void Op00E0();
+  void Op1NNN(const uint16_t &NNN);
+  void Op6XKK(const uint8_t &X, const uint8_t KK);
+  void Op7XKK(const uint8_t &X, const uint8_t KK);
+  void OpANNN(const uint16_t &NNN);
+  void OpDXYN(uint8_t X, uint8_t Y, uint8_t N);
 
   static constexpr std::array<uint8_t, FONTSET_SIZE> FONTSET = {
       0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -44,8 +60,4 @@ class chip8 {
       0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
       0xF0, 0x80, 0xF0, 0x80, 0x80  // F
   };
-
-public:
-  chip8();
-  void loadROM(const std::string &caminho);
 };
