@@ -27,7 +27,7 @@ endif()
 add_executable(chip8
   main.cpp
   src/chip8.cpp
-  src/plataforma.cpp
+  src/platform.cpp
 )
 
 target_include_directories(chip8 PRIVATE include)

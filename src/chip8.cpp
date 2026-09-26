@@ -36,7 +36,7 @@ void chip8::Op7XKK(const uint8_t &X, const uint8_t KK) { V[X] += KK; }
 
 void chip8::OpANNN(const uint16_t &NNN) { I = NNN; }
 
-void chip8::OpDXYN(uint8_t X, uint8_t Y, uint8_t N) {
+void chip8::OpDXYN(const uint8_t &X, const uint8_t &Y, const uint8_t &N) {
 
   uint8_t startCol = V[X] % WIDTH; // posição inicial do pixel display
 

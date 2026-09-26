@@ -36,11 +36,13 @@ private:
   std::array<uint8_t, chip8::WIDTH * chip8::HEIGHT> display;
 
   void Op00E0();
+  void Op00EE();
+  void Op2NNN(const uint16_t &NNN);
   void Op1NNN(const uint16_t &NNN);
   void Op6XKK(const uint8_t &X, const uint8_t KK);
   void Op7XKK(const uint8_t &X, const uint8_t KK);
   void OpANNN(const uint16_t &NNN);
-  void OpDXYN(uint8_t X, uint8_t Y, uint8_t N);
+  void OpDXYN(const uint8_t &X, const uint8_t &Y, const uint8_t &N);
 
   static constexpr std::array<uint8_t, FONTSET_SIZE> FONTSET = {
       0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
