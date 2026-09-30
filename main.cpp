@@ -8,6 +8,7 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
+  std::cout << "teste";
   try {
     platform emulator{};
     emulator.run(argv[1]);

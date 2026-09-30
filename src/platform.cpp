@@ -55,7 +55,8 @@ bool platform::initialize() {
     return false;
   }
 
-  SDL_SetRenderLogicalPresentation(state.renderer, state.width, state.height,
+  SDL_SetRenderLogicalPresentation(state.renderer, emulator.WIDTH,
+                                   emulator.HEIGHT,
                                    SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
   return true;
@@ -64,12 +65,12 @@ bool platform::initialize() {
 void platform::run(const std::string &rom) {
   emulator.loadROM(rom);
 
-  for (int k = 0; k < 100; k++) {
+  for (int k = 0; k < 5000; k++) {
     emulator.cycle();
   }
 
   std::array<uint32_t, 2048> pixels{};
-  auto display = emulator.giveDisplay();
+  const auto &display = emulator.giveDisplay();
   for (size_t i = 0; i < emulator.WIDTH * emulator.HEIGHT; i++) {
     if (display.at(i) == 0) {
       pixels.at(i) = 0xFF000000;
@@ -84,7 +85,7 @@ void platform::run(const std::string &rom) {
       emulator.WIDTH, emulator.HEIGHT);
   SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
   bool running = true;
-  SDL_UpdateTexture(texture, nullptr, pixels.data(), 64 * 4);
+  SDL_UpdateTexture(texture, nullptr, pixels.data(), emulator.WIDTH * 4);
   while (running) {
 
     while (SDL_PollEvent(&event)) {

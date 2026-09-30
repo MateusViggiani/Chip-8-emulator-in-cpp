@@ -37,12 +37,35 @@ private:
 
   void Op00E0();
   void Op00EE();
-  void Op2NNN(const uint16_t &NNN);
   void Op1NNN(const uint16_t &NNN);
-  void Op6XKK(const uint8_t &X, const uint8_t KK);
-  void Op7XKK(const uint8_t &X, const uint8_t KK);
+  void Op2NNN(const uint16_t &NNN);
+  void Op3XKK(const uint8_t &X, const uint8_t &KK);
+  void Op4XKK(const uint8_t &X, const uint8_t &KK);
+  void Op5XY0(const uint8_t &X, const uint8_t &Y);
+  void Op6XKK(const uint8_t &X, const uint8_t &KK);
+  void Op7XKK(const uint8_t &X, const uint8_t &KK);
+  void Op8XY0(const uint8_t &X, const uint8_t &Y);
+  void Op8XY1(const uint8_t &X, const uint8_t &Y);
+  void Op8XY2(const uint8_t &X, const uint8_t &Y);
+  void Op8XY3(const uint8_t &X, const uint8_t &Y);
+  void Op8XY4(const uint8_t &X, const uint8_t &Y);
+  void Op8XY5(const uint8_t &X, const uint8_t &Y);
+  void Op8XY6(const uint8_t &X, const uint8_t &Y);
+  void Op8XY7(const uint8_t &X, const uint8_t &Y);
+  void Op8XYE(const uint8_t &X, const uint8_t &Y);
+  void Op9XY0(const uint8_t &X, const uint8_t &Y);
   void OpANNN(const uint16_t &NNN);
+  void OpBNNN(const uint16_t &NNN);
+  void OpCXKK(const uint8_t &X, const uint8_t &KK);
   void OpDXYN(const uint8_t &X, const uint8_t &Y, const uint8_t &N);
+  void OpFX07(const uint8_t &X);
+  void OpFX15(const uint8_t &X);
+  void OpFX18(const uint8_t &X);
+  void OpFX1E(const uint8_t &X);
+  void OpFX29(const uint8_t &X);
+  void OpFX33(const uint8_t &X);
+  void OpFX55(const uint8_t &X);
+  void OpFX65(const uint8_t &X);
 
   static constexpr std::array<uint8_t, FONTSET_SIZE> FONTSET = {
       0xF0, 0x90, 0x90, 0x90, 0xF0, // 0

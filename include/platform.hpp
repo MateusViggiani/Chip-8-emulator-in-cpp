@@ -10,7 +10,7 @@ struct sdlState {
   SDL_Window *window;
   SDL_Renderer *renderer;
   const int width = 64;
-  const int height = 8;
+  const int height = 32;
 };
 
 class platform {
