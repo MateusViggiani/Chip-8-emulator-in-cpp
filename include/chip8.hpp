@@ -4,13 +4,16 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <sys/types.h>
 
 class chip8 {
 public:
   static constexpr size_t WIDTH = 0x40;
   static constexpr size_t HEIGHT = 0x20;
+  uint8_t delayTimer = 0x0;
+  uint8_t soundTimer = 0x0;
   chip8();
-  void cycle();
+  void cycle(int button, int released);
   void loadROM(const std::string &caminho);
   const std::array<uint8_t, chip8::WIDTH * chip8::HEIGHT> &giveDisplay() const;
   uint8_t showHEIGHT();
@@ -31,8 +34,6 @@ private:
   std::array<uint16_t, STACK_SIZE> stack;
   uint16_t I = 0x0;
   uint8_t sp = 0x0;
-  uint8_t delayTimer = 0x0;
-  uint8_t soundTimer = 0x0;
   std::array<uint8_t, chip8::WIDTH * chip8::HEIGHT> display;
 
   void Op00E0();
@@ -58,7 +59,10 @@ private:
   void OpBNNN(const uint16_t &NNN);
   void OpCXKK(const uint8_t &X, const uint8_t &KK);
   void OpDXYN(const uint8_t &X, const uint8_t &Y, const uint8_t &N);
+  void OpEX9E(const uint8_t &X, const int &button);
+  void OpEXA1(const uint8_t &X, const int &button);
   void OpFX07(const uint8_t &X);
+  void OpFX0A(const uint8_t &X, const int &button);
   void OpFX15(const uint8_t &X);
   void OpFX18(const uint8_t &X);
   void OpFX1E(const uint8_t &X);

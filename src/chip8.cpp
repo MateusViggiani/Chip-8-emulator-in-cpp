@@ -176,7 +176,27 @@ void chip8::OpDXYN(const uint8_t &X, const uint8_t &Y, const uint8_t &N) {
   }
 }
 
+void chip8::OpEX9E(const uint8_t &X, const int &button) {
+  if (button == V[X]) {
+    pc += 2;
+  }
+}
+
+void chip8::OpEXA1(const uint8_t &X, const int &button) {
+  if (button != V[X]) {
+    pc += 2;
+  }
+}
+
 void chip8::OpFX07(const uint8_t &X) { V[X] = delayTimer; }
+
+void chip8::OpFX0A(const uint8_t &X, const int &button) {
+  if (button == -1) {
+    pc -= 2;
+  } else {
+    V[X] = static_cast<uint8_t>(button);
+  }
+}
 
 void chip8::OpFX15(const uint8_t &X) { delayTimer = V[X]; }
 
@@ -221,8 +241,7 @@ chip8::giveDisplay() const {
   return display;
 }
 
-void chip8::cycle() {
-
+void chip8::cycle(int button, int released) {
   uint16_t opcode = static_cast<uint16_t>(
       (memory[pc + 1]) | (static_cast<uint16_t>(memory[pc]) << 8));
   pc += 2;
@@ -349,7 +368,7 @@ void chip8::cycle() {
   }
 
   case 0xC: {
-    OpCXKK(X, Y);
+    OpCXKK(X, KK);
     break;
   }
 
@@ -358,10 +377,28 @@ void chip8::cycle() {
     break;
   }
 
+  case 0xE: {
+    switch (KK) {
+    case 0x9E: {
+      OpEX9E(X, button);
+      break;
+    }
+    case 0xA1: {
+      OpEXA1(X, button);
+      break;
+    }
+    }
+    break;
+  }
+
   case 0xF: {
     switch (KK) {
     case 0x07: {
       OpFX07(X);
+      break;
+    }
+    case 0x0A: {
+      OpFX0A(X, released);
       break;
     }
     case 0x15: {
